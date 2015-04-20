@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'aiGraphPath');
+var game = new Phaser.Game(800, 400, Phaser.AUTO, 'aiGraphPath');
 
 // Define os estados
 game.state.add('boot', boot_state);

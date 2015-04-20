@@ -5,4 +5,8 @@ var edges_state = {
     //assim que o usuario disser que terminou de fazer as arestas,
     //vamos para o estado de pathfind
     
+    create: function () {
+        console.log("edgez");
+    },
+    
 }

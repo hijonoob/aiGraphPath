@@ -13,7 +13,7 @@ var load_state = {
     this.game.load.setPreloadSprite(this.loading);
 
     // Pinta o bg
-    this.game.stage.backgroundColor = '#222222';
+    this.game.stage.backgroundColor = '#FFFF99';
 
     // Carrega images sprites
     this.game.load.spritesheet('graphNode', '../../assets/sprites/graphNode.png', 128, 128, 3);
