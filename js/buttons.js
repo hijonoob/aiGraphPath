@@ -1,6 +1,4 @@
 function initOKButton(){
-    console.log("okzou");
-    
     var numNodes = document.getElementById("numnodes").value;
     
     if (isNaN(numNodes) || numNodes < 2 || numNodes > 20) {
