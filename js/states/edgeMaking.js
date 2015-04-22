@@ -27,7 +27,7 @@ var edges_state = {
             new Vertice(i);
             i++;
         }
-        document.getElementById("prompt").textContent = "Clique nos vertices que deseja conectar e digite de alguma forma seu peso";
+        document.getElementById("prompt").textContent = "Para criar as arestas clique nos dois vértices que deseja conectar";
 
     },
     
