@@ -7,6 +7,16 @@ var edges_state = {
     
     create: function () {
         console.log("edgez");
+        var numNodesLocal = document.getElementById("numnodes").value;
+        var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u","v","w","x","y","z"];
+        var style = { font: "14px Arial", fill: "#000000", align: "left" };
+        var i = 0;
+        while(i < numNodesLocal) {
+            console.log(numNodesLocal);
+            this.game.add.sprite(128 * Math.round(i / 2) - ( (i % 2) ? 128 : 0), 128 * (i % 2) , 'graphNode');
+            this.game.add.text(128 * Math.round(i / 2) + 60  - ( (i % 2) ? 128 : 0), 128 * (i % 2) + 54, listaNome[i], style);
+            i++;
+        }
     },
     
 }
