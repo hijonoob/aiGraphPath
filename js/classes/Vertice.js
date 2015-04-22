@@ -4,11 +4,16 @@ var Vertice = function (i) {
   var tileSize = 80;
   var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
   var style = { font: "14px Arial", fill: "#000000", align: "left" };
+
           
   // variaveis do vertice
-  this.xPos = tileSize * Math.round(i / 2) - ( (i % 2) ? tileSize : 0);
-  this.yPos = tileSize * (i % 2);
+  this.linha = i % 2;
+  this.coluna = Math.round(i / 2) - ( (i % 2) ? 1 : 0);
+  this.xPos = tileSize * this.coluna;
+  this.yPos = tileSize * this.linha;
   this.name = listaNome[i];
+  
+  console.log(this.name + " x" + this.linha + "y" + this.coluna);
   
   // desenha a sprite
   this.sprite = game.add.sprite(this.xPos, this.yPos, 'graphNode');
@@ -37,21 +42,26 @@ var Vertice = function (i) {
 };
 
 Vertice.prototype.click = function (vertice) {
-  // TODO
-  console.log(this.name);
   if (game.startAresta == undefined) {
     game.startAresta = this;
     this.sprite.scale.set(0.55); 
   } else {
-      console.log("comça com " + game.startAresta.name);
-      console.log("termina em " + this.name);
-      game.startAresta.sprite.scale.set(0.5);
+      console.log( Math.abs( game.startAresta.coluna - this.coluna));
+      if (game.startAresta == this || ( Math.abs( game.startAresta.coluna - this.coluna) > 1) ) {
+        // retorna ao padrao
+        game.startAresta.sprite.scale.set(0.5);
+        game.startAresta = undefined;
+      } else {
+        // TODO validar se não fecha o caminho
 
-      var graphics = game.add.graphics(30, 30);
-      graphics.lineStyle(3, 0x33FF00);
-      graphics.moveTo(game.startAresta.xPos,game.startAresta.yPos);
-      graphics.lineTo(this.xPos, this.yPos);
+        var graphics = game.add.graphics(30, 30);
+        graphics.lineStyle(3, 0x33FF00);
+        graphics.moveTo(game.startAresta.xPos,game.startAresta.yPos);
+        graphics.lineTo(this.xPos, this.yPos);
       
-      game.startAresta = undefined;
+        // retorna ao padrao
+        game.startAresta.sprite.scale.set(0.5);
+        game.startAresta = undefined;
+      }
   }
 }
