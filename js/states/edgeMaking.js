@@ -23,6 +23,8 @@ var edges_state = {
             this.game.add.text(tileSize * Math.round(i / 2) + tileSize/3  - ( (i % 2) ? tileSize : 0), tileSize * (i % 2) + tileSize/3, listaNome[i], style);
             i++;
         }
+        document.getElementById("prompt").textContent = "Clique nos vertices que deseja conectar e digite de alguma forma seu peso";
+
     },
     
 }
