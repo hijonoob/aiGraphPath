@@ -3,7 +3,7 @@ var Vertice = function (i) {
   // definicoes estaticas
   var tileSize = 80;
   var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
-  var style = { font: "14px Arial", fill: "#000000", align: "left" };
+  var style = { font: "14px Arial", fill: "#000000", align: "center" };
 
           
   // variaveis do vertice
@@ -42,7 +42,14 @@ Vertice.prototype.matriz = function () {
     for(var i=0; i < game.numNodesLocal; i++){
       for(var j=0; j < game.numNodesLocal; j++) {
         //console.log('i ' + i + ' j + ' + j);
-        game.add.text(40 + i * largura, 160 + j * altura , game.matriz[i][j].toString(), style);
+        if(game.matriz[i][j]==Math.sqrt(2)){
+          var texto = '√2';
+        } else if(game.matriz[i][j]==1){
+          var texto = '1';
+        } else {
+          var texto = "-";
+        }
+        game.add.text(40 + i * largura, 160 + j * altura ,texto, style);
       }
     }
     
@@ -81,7 +88,7 @@ Vertice.prototype.click = function (vertice) {
         if (this.coluna == game.startAresta.coluna || this.linha == game.startAresta.linha ) {
           var peso = 1;
         } else {
-          var peso = Math.sqrt(2).toFixed(1);
+          var peso = Math.sqrt(2);
         }
         // adiciona a aresta na matriz
         game.matriz[primeiroIndice][segundoIndice] = peso;

@@ -23,7 +23,7 @@ var edges_state = {
         while(i <  this.game.numNodesLocal ) {
             this.game.matriz[i] = new Array( this.game.numNodesLocal );
             for(var j=0; j< this.game.numNodesLocal ; j++){
-                this.game.matriz[i][j] = " ";
+                //this.game.matriz[i][j] = "-";
             }
             new Vertice(i);
             i++;
