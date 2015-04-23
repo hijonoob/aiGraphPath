@@ -55,7 +55,7 @@ function rodarFunction(){
         var shape = this.game.add.graphics(0, 0); // inicia o retangulo
         shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa
         shape.beginFill(0xEEEEEE, 1); // cor, alfa
-        shape.drawRect(445, 155, 300, 200); // x, y, largura, altura
+        shape.drawRect(445, 155, 330, 200); // x, y, largura, altura
         shape.endFill();
         
         Prim(); // roda o algoritmo para atualizar variáveis
@@ -67,8 +67,9 @@ function rodarFunction(){
         this.game.add.text(450, 200 ,"Distância Manhattan: " + distManhattan, style);
         this.game.add.text(450, 220 ,"Algoritmo escolhido: Prim", style);
         this.game.add.text(450, 240 ,"Número de passos entre os vértices: " + this.game.qtdadePassos, style);
-        this.game.add.text(450, 260 ,"Caminho percorrido pelo algoritmo: ", style);
-        this.game.add.text(450, 280 , this.game.caminhoPercorrido, style);
+        this.game.add.text(450, 260 ,"Soma de pesos percorido: " + this.game.pesoTotal, style);
+        this.game.add.text(450, 300 ,"Caminho percorrido pelo algoritmo: ", style);
+        this.game.add.text(450, 320 , this.game.caminhoPercorrido, style);
 
     }
 
@@ -77,7 +78,9 @@ function rodarFunction(){
         // define variaveis para uso no algotimo
         this.game.caminhoPercorrido = []; // caminho percorrido
         this.game.qtdadePassos = 0;
-        var vizinhos = []; //new Array( this.game.numNodesLocal ); // vizinhos a percorrer
+        var vizinhos = []; // vizinhos a percorrer
+        this.game.pesoTotal = 0;
+        var deadend = []; // vertices que nao chegam no verticefinal
 
         // Coloca na lista o vertice inicial e o define como usado
         this.game.caminhoPercorrido.push(init);
@@ -85,7 +88,8 @@ function rodarFunction(){
         // Encontra vizinhos
         function encontraVizinho(vertice) {
           for(var i=0; i<this.game.numNodesLocal;i++) {
-            if( vizinhos.indexOf(i) == -1 && this.game.caminhoPercorrido.indexOf(listaNome[i]) == -1 ) {
+            if( vizinhos.indexOf(i) == -1 && this.game.caminhoPercorrido.indexOf(listaNome[i]) == -1 && deadend.indexOf(i) == -1) {
+            //if( vizinhos.indexOf(i) == -1 && this.game.caminhoPercorrido.indexOf(listaNome[i]) == -1) {
                 if (this.game.matriz[vertice][i] == Math.sqrt(2) || this.game.matriz[vertice][i] == 1) {
                     vizinhos.push(i);
                 }
@@ -97,22 +101,36 @@ function rodarFunction(){
           }
         }
         var indiceLoop = initIndex;
-        while(indiceLoop != finalIndex && this.game.qtdadePassos < 21) { // limita quando chega no final ou passa a quantidade maxima
+        while(indiceLoop != finalIndex && this.game.qtdadePassos <= 2000) { // limita quando chega no final ou passa a quantidade maxima de iteracoes
             encontraVizinho(indiceLoop); // encontra os vizinhos do vertice atual
-            indiceLoop = vizinhos.pop(); // escolhe um caminho a percorrer // TODO ordenar por peso
-            if (indiceLoop == undefined) {
+            
+            var indiceLoopNovo = vizinhos.pop(); // escolhe um caminho a percorrer
+            vizinhos = [];
+            if (indiceLoopNovo == undefined) {
+                if(indiceLoop != initIndex && indiceLoop != finalIndex && deadend.indexOf(indiceLoop) == -1) {
+                    deadend.push(indiceLoop);
+                }
+                // reseta variaveis para procurar outro caminho
+                this.game.caminhoPercorrido = []; // caminho percorrido
+                this.game.pesoTotal = 0;
+                // Coloca na lista o vertice inicial e o define como usado
+                this.game.caminhoPercorrido.push(init);
+                indiceLoopNovo = initIndex;
+            } else {
+                // soma os pesos totais percorridos
+                this.game.pesoTotal += (this.game.matriz[indiceLoop][indiceLoopNovo] == undefined ? this.game.matriz[indiceLoopNovo][indiceLoop] : this.game.matriz[indiceLoop][indiceLoopNovo]);
+
+                this.game.caminhoPercorrido.push(listaNome[indiceLoopNovo]); // coloca esse vertice como caminho percorrido
+            }
+            if (this.game.qtdadePassos >= 2000 ) {
                 this.game.caminhoPercorrido = "Caminho não fechado";
+                this.game.qtdadePassos = 0;
                 break; // se terminar de varrer os vizinhos termina o loop
             }
-            console.log(indiceLoop);
-            this.game.caminhoPercorrido.push(listaNome[indiceLoop]); // coloca esse vertice como caminho percorrido
-            console.log(vizinhos);
-            console.log('LOOP caminho percorrido' + this.game.caminhoPercorrido);
-
+            indiceLoop = indiceLoopNovo;
             this.game.qtdadePassos++; // aumenta o contador
+
         }
-        console.log('vizinhos final' + vizinhos);
-        console.log('caminho percorrido' + this.game.caminhoPercorrido);
 
         
         //function findMin(g) {
@@ -133,5 +151,4 @@ function rodarFunction(){
         //    min = findMin(g);
         //}
     };
-
 };
