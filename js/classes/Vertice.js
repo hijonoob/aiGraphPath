@@ -38,6 +38,12 @@ Vertice.prototype.matriz = function () {
     var style = { font: "12px Arial", fill: "#000000", align: "left" };
     var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
 
+    // pinta um retangulo para tampar a tabela anterior
+    var shape = game.add.graphics(0, 0); // inicia o retangulo
+    shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa
+    shape.beginFill(0xEEEEEE, 1); // cor, alfa
+    shape.drawRect(25, 145, game.numNodesLocal * largura + 10, game.numNodesLocal * altura + 30 ); // x, y, largura, altura
+    shape.endFill();
 
     for(var i=0; i < game.numNodesLocal; i++){
       for(var j=0; j < game.numNodesLocal; j++) {
