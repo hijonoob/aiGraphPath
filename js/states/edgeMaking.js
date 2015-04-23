@@ -17,6 +17,17 @@ var edges_state = {
         this.game.startAresta == undefined;
 
         this.game.matriz = new Array( this.game.numNodesLocal );
+        
+    	this.game.roda = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER); //define enter como tecla alternativa para confirmar
+    	this.game.rodarButton = document.getElementById("prompt").insertAdjacentHTML("afterEnd","<button id='rodarbutton' onclick='rodarFunction()'>Rodar o algoritmo</button> <br />");
+        this.game.inputText = document.getElementById("prompt").insertAdjacentHTML("afterEnd","Vértice final <input type='text' id='verticeFinal' size='20'> <br/>");
+        this.game.inputText = document.getElementById("prompt").insertAdjacentHTML("afterEnd","Vértice inicial <input type='text' id='verticeInicial' size='20'> <br/>");
+
+        this.game.input.keyboard.addCallbacks(this, null, this.keyPress, null);
+        
+        //define o que o enter faz nesse contexto
+        this.game.roda.onDown.add(this.rodar, this);
+        
 
         // cria as vertices
         var i = 0;
@@ -28,9 +39,28 @@ var edges_state = {
             new Vertice(i);
             i++;
         }
-    //    console.log(this.game.matriz);
         document.getElementById("prompt").textContent = "Para criar as arestas clique nos dois vértices que deseja conectar";
 
     },
     
+    rodar : function () {
+        rodarFunction();
+    },
 }
+
+function rodarFunction(){
+    var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
+    
+    var init = document.getElementById("verticeInicial").value;
+    var initIndex = listaNome.indexOf(init);
+    var final = document.getElementById("verticeFinal").value;
+    var finalIndex = listaNome.indexOf(final);
+
+    if (initIndex == -1 || initIndex > this.game.numNodesLocal) {
+        alert("O valor inicial precisa ser uma letra em caixa baixa exibida no grafo");
+    } else if (finalIndex == -1 || finalIndex > this.game.numNodesLocal || initIndex == finalIndex) {
+        alert("O valor final precisa ser uma letra em caixa baixa exibida no grafo diferente da inicial");
+    } else {
+        // calcula algoritmo
+    }
+};
