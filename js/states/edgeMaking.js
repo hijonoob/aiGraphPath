@@ -11,22 +11,24 @@ var edges_state = {
 
     create: function () {
         // captura a quantidade de vertices
-        var numNodesLocal = document.getElementById("numnodes").value;
+        this.game.numNodesLocal = document.getElementById("numnodes").value;
         
         // startAresta como nao definido
         this.game.startAresta == undefined;
-        
-        // cria grupo de vertices
-        this.game.vertices = this.game.add.group();
-        this.game.vertices.enableBody = true;
-        this.game.physics.enable(this.game.vertices, Phaser.Physics.ARCADE);
+
+        this.game.matriz = new Array( this.game.numNodesLocal );
 
         // cria as vertices
         var i = 0;
-        while(i < numNodesLocal) {
+        while(i <  this.game.numNodesLocal ) {
+            this.game.matriz[i] = new Array( this.game.numNodesLocal );
+            for(var j=0; j< this.game.numNodesLocal ; j++){
+                this.game.matriz[i][j] = " ";
+            }
             new Vertice(i);
             i++;
         }
+    //    console.log(this.game.matriz);
         document.getElementById("prompt").textContent = "Para criar as arestas clique nos dois vértices que deseja conectar";
 
     },
