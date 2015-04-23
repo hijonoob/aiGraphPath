@@ -14,8 +14,6 @@ var Vertice = function (i) {
   this.name = listaNome[i];
   this.indice = i;
   
-  //console.log(this.name + " x" + this.linha + "y" + this.coluna);
-  
   // desenha a sprite
   this.sprite = game.add.sprite(this.xPos, this.yPos, 'graphNode');
   this.sprite.scale.set(0.5);

@@ -2,13 +2,6 @@
 
 
 var edges_state = {
-    //nesse estado, o usuario ja pode visualizar os vertices do grafo
-    //e pode clicar e arrastar de um vertice para outro para formar uma aresta entre eles
-    //(ele deve fornecer algum modo de desfazer uma aresta tambem)
-    //assim que o usuario disser que terminou de fazer as arestas,
-    //vamos para o estado de pathfind
-
-
     create: function () {
         // captura a quantidade de vertices
         this.game.numNodesLocal = document.getElementById("numnodes").value;
@@ -34,7 +27,7 @@ var edges_state = {
         while(i <  this.game.numNodesLocal ) {
             this.game.matriz[i] = new Array( this.game.numNodesLocal );
             for(var j=0; j< this.game.numNodesLocal ; j++){
-                //this.game.matriz[i][j] = "-";
+                //this.game.matriz[i][j] = "-"; // nao salva nada onde nao ha aresta
             }
             new Vertice(i);
             i++;
@@ -53,14 +46,38 @@ function rodarFunction(){
     
     var init = document.getElementById("verticeInicial").value;
     var initIndex = listaNome.indexOf(init);
+    var initCol =  Math.round(initIndex / 2) - ( (initIndex % 2) ? 1 : 0);
+    var initLin =  initIndex % 2;
+    
     var final = document.getElementById("verticeFinal").value;
     var finalIndex = listaNome.indexOf(final);
+    var finalCol =  Math.round(finalIndex / 2) - ( (finalIndex % 2) ? 1 : 0);
+    var finalLin =  finalIndex % 2;
 
     if (initIndex == -1 || initIndex > this.game.numNodesLocal) {
         alert("O valor inicial precisa ser uma letra em caixa baixa exibida no grafo");
     } else if (finalIndex == -1 || finalIndex > this.game.numNodesLocal || initIndex == finalIndex) {
         alert("O valor final precisa ser uma letra em caixa baixa exibida no grafo diferente da inicial");
     } else {
-        // calcula algoritmo
+        // todo calcula algoritmo - exibir caminho, exibir passos - exibir manhattan
+        
+        // pinta um retangulo para tampar os textos anteriores
+        var shape = this.game.add.graphics(0, 0); // inicia o retangulo
+        shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa
+        shape.beginFill(0xEEEEEE, 1); // cor, alfa
+        shape.drawRect(445, 155, 300, 200); // x, y, largura, altura
+        shape.endFill();
+    
+        var style = { font: "14px Arial", fill: "#FF0000", align: "center" };
+        this.game.add.text(450, 160 ,"Vértice inicial: " + init, style);
+        this.game.add.text(450, 180 ,"Vértice final: " + final, style);
+        var distManhattan = Math.abs(initCol - finalCol) + Math.abs(initLin - finalLin);
+        this.game.add.text(450, 200 ,"Distância Manhattan: " + distManhattan, style);
+        this.game.add.text(450, 220 ,"Algoritmo escolhido: Djikistra", style);
+        var qtdadePassos = 10; // TODO rodar o algoritmo e verificar se consegue chegar e quantos passos demora
+        this.game.add.text(450, 240 ,"Número de passos entre os vértices: " + qtdadePassos, style);
+        var caminhoPercorrido = "A-Z-C-A-R-A-M-B-A" // TODO rodar o algoritmo e verificar se consegue chegar e o caminho percorrido
+        this.game.add.text(450, 260 ,"Caminho percorrido pelo algoritmo: ", style);
+        this.game.add.text(450, 280 ,caminhoPercorrido, style);
     }
 };
