@@ -50,7 +50,7 @@ function rodarFunction(){
         var shape = this.game.add.graphics(0, 0); // inicia o retangulo
         shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa
         shape.beginFill(0xEEEEEE, 1); // cor, alfa
-        shape.drawRect(445, 155, 330, 200); // x, y, largura, altura
+        shape.drawRect(445, 145, 330, 200); // x, y, largura, altura
         shape.endFill();
         
         Prim(); // roda o algoritmo para atualizar variáveis
