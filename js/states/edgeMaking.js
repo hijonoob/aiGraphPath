@@ -4,27 +4,22 @@ var edges_state = {
     create: function () {
         // captura a quantidade de vertices
         this.game.numNodesLocal = document.getElementById("numnodes").value;
-        
         // startAresta como nao definido
         this.game.startAresta == undefined;
-
         this.game.matriz = new Array( this.game.numNodesLocal );
-        
     	this.game.roda = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER); //define enter como tecla alternativa para confirmar
     	this.game.rodarButton = document.getElementById("prompt").insertAdjacentHTML("afterEnd","<button id='rodarbutton' onclick='rodarFunction()'>Rodar o algoritmo</button> <br />");
         this.game.inputText = document.getElementById("prompt").insertAdjacentHTML("afterEnd","Vértice final <input type='text' id='verticeFinal' size='20'> <br/>");
         this.game.inputText = document.getElementById("prompt").insertAdjacentHTML("afterEnd","Vértice inicial <input type='text' id='verticeInicial' size='20'> <br/>");
         this.game.input.keyboard.addCallbacks(this, null, this.keyPress, null);
-        
         //define o que o enter faz nesse contexto
         this.game.roda.onDown.add(this.rodar, this);
-        
         // cria as vertices
         var i = 0;
         while(i <  this.game.numNodesLocal ) {
             this.game.matriz[i] = new Array( this.game.numNodesLocal );
             for(var j=0; j< this.game.numNodesLocal ; j++){
-                // nao salva nada onde nao ha aresta
+                // nao salva nada onde nao ha aresta para não ocupar espaço na matriz
             }
             new Vertice(i);
             i++;
@@ -51,7 +46,7 @@ function rodarFunction(){
     } else if (finalIndex == -1 || finalIndex > this.game.numNodesLocal || initIndex == finalIndex) {
         alert("O valor final precisa ser uma letra em caixa baixa exibida no grafo diferente da inicial");
     } else {
-        // pinta um retangulo para tampar os textos anteriores
+        // pinta um retangulo para nao exibir os textos anteriores
         var shape = this.game.add.graphics(0, 0); // inicia o retangulo
         shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa
         shape.beginFill(0xEEEEEE, 1); // cor, alfa
@@ -70,10 +65,8 @@ function rodarFunction(){
         this.game.add.text(450, 260 ,"Soma de pesos percorido: " + this.game.pesoTotal, style);
         this.game.add.text(450, 300 ,"Caminho percorrido pelo algoritmo: ", style);
         this.game.add.text(450, 320 , this.game.caminhoPercorrido, style);
-
     }
 
-    
     function Prim() {
         // define variaveis para uso no algotimo
         this.game.caminhoPercorrido = []; // caminho percorrido
@@ -81,10 +74,8 @@ function rodarFunction(){
         var vizinhos = []; // vizinhos a percorrer
         this.game.pesoTotal = 0;
         var deadend = []; // vertices que nao chegam no verticefinal
-
         // Coloca na lista o vertice inicial e o define como usado
         this.game.caminhoPercorrido.push(init);
-    
         // Encontra vizinhos
         function encontraVizinho(vertice) {
           for(var i=0; i<this.game.numNodesLocal;i++) {
@@ -101,14 +92,13 @@ function rodarFunction(){
           }
         }
         var indiceLoop = initIndex;
-        while(indiceLoop != finalIndex && this.game.qtdadePassos <= 2000) { // limita quando chega no final ou passa a quantidade maxima de iteracoes
+        while(indiceLoop != finalIndex && this.game.qtdadePassos <= 2000) { // limita quando chega no final ou passa a quantidade maxima de iteracoes - a qtdade é usada, pois podemos percorrer diversos caminhos sem encontrar o destino
             encontraVizinho(indiceLoop); // encontra os vizinhos do vertice atual
-            
             var indiceLoopNovo = vizinhos.pop(); // escolhe um caminho a percorrer
-            vizinhos = [];
+            vizinhos = []; // limpa vizinhos, pois não estamos fazendo árvore e sim encontrando caminho
             if (indiceLoopNovo == undefined) {
                 if(indiceLoop != initIndex && indiceLoop != finalIndex && deadend.indexOf(indiceLoop) == -1) {
-                    deadend.push(indiceLoop);
+                    deadend.push(indiceLoop); // inclui o vertice como linha que nao chega ao destino
                 }
                 // reseta variaveis para procurar outro caminho
                 this.game.caminhoPercorrido = []; // caminho percorrido
@@ -123,32 +113,12 @@ function rodarFunction(){
                 this.game.caminhoPercorrido.push(listaNome[indiceLoopNovo]); // coloca esse vertice como caminho percorrido
             }
             if (this.game.qtdadePassos >= 2000 ) {
-                this.game.caminhoPercorrido = "Caminho não fechado";
-                this.game.qtdadePassos = 0;
+                this.game.caminhoPercorrido = "Caminho não fechado"; // caso nao encontre em nenhum caminho existente, confirmar que caminho não está fechado
+                this.game.qtdadePassos = 0; // zera número de passos, pois não há caminho
                 break; // se terminar de varrer os vizinhos termina o loop
             }
             indiceLoop = indiceLoopNovo;
-            this.game.qtdadePassos++; // aumenta o contador
-
+            this.game.qtdadePassos++; // aumenta o contador de passos
         }
-
-        
-        //function findMin(g) {
-        //    var min = [999,null];
-        //    for(var i=0;i<resultado.length;i++) 
-        //        for(var n=0;n<g.edges[result[i]].length;n++) 
-        //            if(g.edges[result[i]][n].capacity < min[0] && usedNodes[g.edges[result[i]][n].sink] === undefined)
-        //                min = [g.edges[result[i]][n].capacity, g.edges[result[i]][n].sink];
-        //    return min[1];
-        //}
-        
-
-        
-        //var min = findMin(g);
-        //while(min != null) {
-        //    result.push(min);
-        //    usedNodes[min] = true;
-        //    min = findMin(g);
-        //}
     };
 };

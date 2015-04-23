@@ -4,8 +4,6 @@ var Vertice = function (i) {
   var tileSize = 80;
   var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
   var style = { font: "14px Arial", fill: "#000000", align: "center" };
-
-          
   // variaveis do vertice
   this.linha = i % 2;
   this.coluna = Math.round(i / 2) - ( (i % 2) ? 1 : 0);
@@ -13,39 +11,29 @@ var Vertice = function (i) {
   this.yPos = tileSize * this.linha;
   this.name = listaNome[i];
   this.indice = i;
-  
   // desenha a sprite
   this.sprite = game.add.sprite(this.xPos, this.yPos, 'graphNode');
   this.sprite.scale.set(0.5);
   this.sprite.inputEnabled = true;
   this.sprite.input.useHandCursor = true; //if you want a hand cursor
   this.sprite.events.onInputDown.add(this.click, this);
-    
   // desenha o texto
   game.add.text(tileSize * Math.round(i / 2) + tileSize/3  - ( (i % 2) ? tileSize : 0), tileSize * (i % 2) + tileSize/3, this.name, style);
-
-  // adiciona no grupo de vertices  
-  //game.vertices.add(this.sprite);
-            
 };
-
 
 Vertice.prototype.matriz = function () {
     var largura = 20;
     var altura = 12;
     var style = { font: "12px Arial", fill: "#000000", align: "left" };
     var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
-
     // pinta um retangulo para tampar a tabela anterior
     var shape = game.add.graphics(0, 0); // inicia o retangulo
     shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa
     shape.beginFill(0xEEEEEE, 1); // cor, alfa
     shape.drawRect(25, 145, game.numNodesLocal * largura + 10, game.numNodesLocal * altura + 30 ); // x, y, largura, altura
     shape.endFill();
-
     for(var i=0; i < game.numNodesLocal; i++){
       for(var j=0; j < game.numNodesLocal; j++) {
-        //console.log('i ' + i + ' j + ' + j);
         if(game.matriz[i][j]==Math.sqrt(2)){
           var texto = '√2';
         } else if(game.matriz[i][j]==1){
@@ -56,12 +44,10 @@ Vertice.prototype.matriz = function () {
         game.add.text(40 + i * largura, 160 + j * altura ,texto, style);
       }
     }
-    
     for(var i=0; i < game.numNodesLocal; i++){
       game.add.text(40 + i * largura, 150, listaNome[i], style);
       game.add.text(30, 160 + i * altura, listaNome[i], style);
     }
-
 }
 
 Vertice.prototype.click = function (vertice) {
@@ -69,9 +55,9 @@ Vertice.prototype.click = function (vertice) {
     game.startAresta = this;
     this.sprite.scale.set(0.55); 
   } else {
-      // se for o proprio vertice ou nao vizinho ele reseta
+      // se for o proprio vertice ou nao for um vizinho -  reseta ao padrao sem adicionar linha
       if (game.startAresta == this || ( Math.abs( game.startAresta.coluna - this.coluna) > 1) ) {
-        // retorna ao padrao
+        // retorna ao padrao de tamanho
         game.startAresta.sprite.scale.set(0.5);
         game.startAresta = undefined;
       } else {
@@ -96,7 +82,6 @@ Vertice.prototype.click = function (vertice) {
         }
         // adiciona a aresta na matriz
         game.matriz[primeiroIndice][segundoIndice] = peso;
-        
         // retorna ao padrao
         game.startAresta.sprite.scale.set(0.5);
         game.startAresta = undefined;

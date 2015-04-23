@@ -11,14 +11,10 @@ var load_state = {
     this.loading.scale.set(0.3);
     // Define o sprite como pre loader
     this.game.load.setPreloadSprite(this.loading);
-
     // Pinta o bg
     this.game.stage.backgroundColor = '#FFFF99';
-
     // Carrega images sprites
     this.game.load.spritesheet('graphNode', '../../assets/sprites/graphNode.png', 128, 128, 3);
-
-   
   },
 
   create: function () {
@@ -28,7 +24,6 @@ var load_state = {
 
   update: function () {
     // todo frame verifica se ja esta pronto, qd estiver vai para o estado 'init'
-    
       if (this.ready) {
         this.game.state.start('init');
       }
