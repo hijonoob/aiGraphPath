@@ -60,11 +60,18 @@ function rodarFunction(){
         this.game.add.text(450, 180 ,"Vértice final: " + final, style);
         var distManhattan = Math.abs(initCol - finalCol) + Math.abs(initLin - finalLin);
         this.game.add.text(450, 200 ,"Distância Manhattan: " + distManhattan, style);
-        this.game.add.text(450, 220 ,"Algoritmo escolhido: Prim", style);
+        this.game.add.text(450, 220 ,"Baseado no algoritmo Prim", style);
         this.game.add.text(450, 240 ,"Número de passos entre os vértices: " + this.game.qtdadePassos, style);
         this.game.add.text(450, 260 ,"Soma de pesos percorido: " + this.game.pesoTotal, style);
         this.game.add.text(450, 300 ,"Caminho percorrido pelo algoritmo: ", style);
         this.game.add.text(450, 320 , this.game.caminhoPercorrido, style);
+        var style2 = { font: "10px Arial", fill: "#000000", align: "center" };
+        this.game.add.text(450, 345 ,"  - Heurística que busca os vizinhos do vértice e escolhe o último repetindo", style2);
+        this.game.add.text(450, 357 ,"o processo até chegar no vértice final.", style2);
+        this.game.add.text(450, 369 ,"  - Caso o caminho não chegue ao final, o último vértice percorrido é", style2);
+        this.game.add.text(450, 381 ,"incluso em uma black list a ser ignorado e nova busca é feita.", style2);
+        this.game.add.text(450, 393 ,"  - Caso o algoritmo passe de 2000 passos, o ciclo é interrompido por", style2);
+        this.game.add.text(450, 405 ,"ter um grafo não conectado entre os pontos inicial e final.", style2);
     }
 
     function Prim() {
