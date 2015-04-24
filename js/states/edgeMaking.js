@@ -90,7 +90,6 @@ function rodarFunction(){
         function encontraVizinho(vertice) {
           for(var i=0; i<this.game.numNodesLocal;i++) {
             if( vizinhos.indexOf(i) == -1 && this.game.caminhoPercorrido.indexOf(listaNome[i]) == -1 && deadend.indexOf(i) == -1) {
-            //if( vizinhos.indexOf(i) == -1 && this.game.caminhoPercorrido.indexOf(listaNome[i]) == -1) {
                 if (this.game.matriz[vertice][i] == Math.sqrt(2) || this.game.matriz[vertice][i] == 1) {
                     vizinhos.push(i);
                 }
@@ -103,6 +102,7 @@ function rodarFunction(){
         }
         var indiceLoop = initIndex;
         this.game.passos = 0;
+        
         while(indiceLoop != finalIndex && this.game.qtdadePassos <= 2000) { // limita quando chega no final ou passa a quantidade maxima de iteracoes - a qtdade é usada, pois podemos percorrer diversos caminhos sem encontrar o destino
             encontraVizinho(indiceLoop); // encontra os vizinhos do vertice atual
             var indiceLoopNovo = vizinhos.pop(); // escolhe um caminho a percorrer
@@ -128,7 +128,6 @@ function rodarFunction(){
                 this.game.pesoTotal += pesoLocal;
 
                 this.game.caminhoPercorrido.push(listaNome[indiceLoopNovo]); // coloca esse vertice como caminho percorrido
-                this.game.qtdadePassos++; // aumenta o contador de passos
                 this.game.passos++; // aumenta numero de passos
             }
             if (this.game.qtdadePassos >= 2000 ) {
@@ -136,6 +135,7 @@ function rodarFunction(){
                 this.game.qtdadePassos = 0; // zera número de passos, pois não há caminho
                 break; // se terminar de varrer os vizinhos termina o loop
             }
+            this.game.qtdadePassos++; // aumenta o contador de passos
             indiceLoop = indiceLoopNovo;
 
         }
