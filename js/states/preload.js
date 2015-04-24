@@ -12,7 +12,8 @@ var load_state = {
     // Define o sprite como pre loader
     this.game.load.setPreloadSprite(this.loading);
     // Pinta o bg
-    this.game.stage.backgroundColor = '#FFFF99';
+    //this.game.stage.backgroundColor = '#FFFF99';
+    this.game.stage.backgroundColor = '#FFFFFF';
     // Carrega images sprites
     this.game.load.spritesheet('graphNode', '../../assets/sprites/graphNode.png', 128, 128, 3);
   },

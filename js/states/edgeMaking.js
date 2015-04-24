@@ -60,7 +60,7 @@ function rodarFunction(){
         this.game.add.text(450, 180 ,"Vértice final: " + final, style);
         var distManhattan = Math.abs(initCol - finalCol) + Math.abs(initLin - finalLin);
         this.game.add.text(450, 200 ,"Distância Manhattan: " + distManhattan, style);
-        this.game.add.text(450, 220 ,"Baseado no algoritmo Prim", style);
+        this.game.add.text(450, 220 ,"Baseado em Busca por Profundidade", style);
         this.game.add.text(450, 240 ,"Número de passos entre os vértices: " + this.game.qtdadePassos, style);
         this.game.add.text(450, 260 ,"Soma de pesos percorido: " + this.game.pesoTotal, style);
         this.game.add.text(450, 300 ,"Caminho percorrido pelo algoritmo: ", style);
