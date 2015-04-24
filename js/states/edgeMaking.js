@@ -52,6 +52,9 @@ function rodarFunction(){
         shape.beginFill(0xEEEEEE, 1); // cor, alfa
         shape.drawRect(445, 145, 330, 200); // x, y, largura, altura
         shape.endFill();
+        shape.beginFill(0xFFFFFF, 1); // cor, alfa
+        shape.drawRect(445, 345, 350, 350); // x, y, largura, altura
+        shape.endFill();
         
         Prim(); // roda o algoritmo para atualizar variáveis
     
@@ -61,7 +64,7 @@ function rodarFunction(){
         var distManhattan = Math.abs(initCol - finalCol) + Math.abs(initLin - finalLin);
         this.game.add.text(450, 200 ,"Distância Manhattan: " + distManhattan, style);
         this.game.add.text(450, 220 ,"Baseado em Busca por Profundidade", style);
-        this.game.add.text(450, 240 ,"Número de passos entre os vértices: " + this.game.qtdadePassos, style);
+        this.game.add.text(450, 240 ,"Número de passos entre os vértices: " + this.game.passos, style);
         this.game.add.text(450, 260 ,"Soma de pesos percorido: " + this.game.pesoTotal, style);
         this.game.add.text(450, 300 ,"Caminho percorrido pelo algoritmo: ", style);
         this.game.add.text(450, 320 , this.game.caminhoPercorrido, style);
@@ -99,6 +102,7 @@ function rodarFunction(){
           }
         }
         var indiceLoop = initIndex;
+        this.game.passos = 0;
         while(indiceLoop != finalIndex && this.game.qtdadePassos <= 2000) { // limita quando chega no final ou passa a quantidade maxima de iteracoes - a qtdade é usada, pois podemos percorrer diversos caminhos sem encontrar o destino
             encontraVizinho(indiceLoop); // encontra os vizinhos do vertice atual
             var indiceLoopNovo = vizinhos.pop(); // escolhe um caminho a percorrer
@@ -110,14 +114,22 @@ function rodarFunction(){
                 // reseta variaveis para procurar outro caminho
                 this.game.caminhoPercorrido = []; // caminho percorrido
                 this.game.pesoTotal = 0;
+                this.game.passos = 0;
                 // Coloca na lista o vertice inicial e o define como usado
                 this.game.caminhoPercorrido.push(init);
                 indiceLoopNovo = initIndex;
             } else {
                 // soma os pesos totais percorridos
-                this.game.pesoTotal += (this.game.matriz[indiceLoop][indiceLoopNovo] == undefined ? this.game.matriz[indiceLoopNovo][indiceLoop] : this.game.matriz[indiceLoop][indiceLoopNovo]);
+                if(indiceLoop<indiceLoopNovo) {
+                    var pesoLocal = this.game.matriz[indiceLoop][indiceLoopNovo];
+                } else {
+                    var pesoLocal = this.game.matriz[indiceLoopNovo][indiceLoop];
+                }
+                this.game.pesoTotal += pesoLocal;
 
                 this.game.caminhoPercorrido.push(listaNome[indiceLoopNovo]); // coloca esse vertice como caminho percorrido
+                this.game.qtdadePassos++; // aumenta o contador de passos
+                this.game.passos++; // aumenta numero de passos
             }
             if (this.game.qtdadePassos >= 2000 ) {
                 this.game.caminhoPercorrido = "Caminho não fechado"; // caso nao encontre em nenhum caminho existente, confirmar que caminho não está fechado
@@ -125,7 +137,7 @@ function rodarFunction(){
                 break; // se terminar de varrer os vizinhos termina o loop
             }
             indiceLoop = indiceLoopNovo;
-            this.game.qtdadePassos++; // aumenta o contador de passos
+
         }
     };
 };
