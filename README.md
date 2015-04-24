@@ -7,7 +7,7 @@ Maurício
 Lucas
 Danilo
 
-Valo
+Vale
 20% N1
 
 Entradas
