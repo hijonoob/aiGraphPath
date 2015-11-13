@@ -2,7 +2,7 @@
 var Vertice = function (i) {
   // definicoes estaticas
   var tileSize = 80;
-  var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
+  var listaNome = ["a","b","c","d","e","f","g","h","i","j"];
   var style = { font: "14px Arial", fill: "#000000", align: "center" };
   // variaveis do vertice
   this.linha = i % 2;
@@ -25,7 +25,7 @@ Vertice.prototype.matriz = function () {
     var largura = 20;
     var altura = 12;
     var style = { font: "12px Arial", fill: "#000000", align: "left" };
-    var listaNome = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","p","q","r","s","t","u"];
+    var listaNome = ["a","b","c","d","e","f","g","h","i","j"];
     // pinta um retangulo para tampar a tabela anterior
     var shape = game.add.graphics(0, 0); // inicia o retangulo
     shape.lineStyle(0, 0x000000, 0); // largura, cor, alfa

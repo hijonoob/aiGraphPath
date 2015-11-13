@@ -2,8 +2,10 @@
 Trabalho de IA.
 Fatec São Caetano do Sul
 
+No primeiro semestre de 2015 (Ver commits antigos para esta versão):
+
 Integrantes
-Maurício
+Mauricio
 Lucas
 Danilo
 
@@ -34,3 +36,14 @@ Saídas
 Observações
 * Não precisa criar árvore, só achar caminho
 * Interfaces e Usabilidade do software serão avaliados
+
+No segundo semestre de 2015:
+
+Integrantes
+Mauricio
+Murilo
+
+Vale
+20% N2
+
+![](http://i.imgur.com/Y8MIQ4L.jpg)

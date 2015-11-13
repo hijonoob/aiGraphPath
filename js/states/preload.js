@@ -15,7 +15,7 @@ var load_state = {
     //this.game.stage.backgroundColor = '#FFFF99';
     this.game.stage.backgroundColor = '#FFFFFF';
     // Carrega images sprites
-    this.game.load.spritesheet('graphNode', '../../assets/sprites/graphNode.png', 128, 128, 3);
+    this.game.load.spritesheet('graphNode', 'assets/sprites/graphNode.png', 128, 128, 3);
   },
 
   create: function () {
